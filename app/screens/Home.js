@@ -3,10 +3,10 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native';
 
-import {Root} from './app/index/router';
+import { BGC, tintColor } from '../index/colors';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -16,10 +16,20 @@ const instructions = Platform.select({
 });
 
 type Props = {};
-export default class App extends Component<Props> {
+export default class Home extends Component<Props> {
   render() {
     return (
-      <Root/>
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Welcome to React Native!
+        </Text>
+        <Text style={styles.instructions}>
+          To get started, edit App.js
+        </Text>
+        <Text style={styles.instructions}>
+          {instructions}
+        </Text>
+      </View>
     );
   }
 }
@@ -29,7 +39,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: `${BGC}`,
   },
   welcome: {
     fontSize: 20,
@@ -38,9 +48,7 @@ const styles = StyleSheet.create({
   },
   instructions: {
     textAlign: 'center',
-    color: '#333333',
+    color: '#cccccc',
     marginBottom: 5,
   },
 });
-
-console.disableYellowBox = true; 
