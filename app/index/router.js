@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, Image} from 'react-native';
-import { createBottomTabNavigator, createStackNavigator, DrawerNavigator } from 'react-navigation';
+import {StyleSheet, Image, Platform} from 'react-native';
+import { createBottomTabNavigator, createMaterialTopTabNavigator, createStackNavigator, DrawerNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { BGC, tintColor } from './colors';
@@ -21,7 +21,9 @@ export const HomeStack = createStackNavigator({
   headerMode:'none',
 })
 
-export const TabNav = createBottomTabNavigator({
+const tabType = Platform.OS == 'ios' ? createBottomTabNavigator : createMaterialTopTabNavigator
+
+export const TabNav = tabType({
   Home: {
     screen: HomeStack,
     navigationOptions: {
@@ -85,10 +87,12 @@ export const TabNav = createBottomTabNavigator({
 }, {
   mode: 'modal',
   headerMode: 'none',
+  animationEnabled: true,
+  swipeEnabled: true,
   tabBarOptions: {
     showLabel: false,
-    activeBackgroundColor:'#7f8c8d',
-    inactiveBackgroundColor:'#7f8c8d'
+    activeBackgroundColor:`${BGC}`,
+    inactiveBackgroundColor:`${BGC}`
 
   }
 })

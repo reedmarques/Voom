@@ -3,10 +3,12 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  SafeAreaView
 } from 'react-native';
 
 import {Root} from './app/index/router';
+import {BGC, tintColor} from './app/index/colors';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -19,28 +21,18 @@ type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <Root/>
+      // <SafeAreaView style={styles.safeArea}>
+        <Root/>
+      // {/* </SafeAreaView> */}
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  safeArea: {
+    flex:1,
+    backgroundColor:`${tintColor}`
+  }
 });
 
-console.disableYellowBox = true; 
+console.disableYellowBox = true;
