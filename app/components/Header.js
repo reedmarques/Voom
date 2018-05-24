@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { BGC, tintColor } from '../index/colors';
+import FBSDK, {LoginManager, AccessToken} from 'react-native-fbsdk';
 
 
 export default class Header extends Component<Props> {
@@ -16,14 +17,34 @@ export default class Header extends Component<Props> {
     this.props.navigation.navigate('Picker')
   }
 
+  getFriendsList(){
+    AccessToken.getCurrentAccessToken().then(
+      (data) => {
+        accessToken = data.accessToken
+        userID = data.userID
+        console.log(accessToken)
+        console.log(userID);
 
+        return fetch(`https://graph.facebook.com/${userID}/taggable_friends?access_token=${accessToken}`)
+          .then((response) => response.json())
+          .then((responseJson) => {
+            console.log('responseJson', responseJson);
+            return responseJson;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+
+  });
+
+  }
 
   render() {
     return (
       <View style={styles.container}>
         {/* <View style={styles.horizContainer}> */}
-          <TouchableOpacity>
-            <Icon name='ios-upload' size={30} color='transparent'/>
+          <TouchableOpacity onPress={() => this.getFriendsList()}>
+            <Icon name='ios-upload' size={30} color='white'/>
           </TouchableOpacity>
           <Text style={styles.title}>
             HOT AIR

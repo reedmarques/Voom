@@ -31,10 +31,14 @@ export default class App extends Component<Props> {
   }
 
   componentDidMount(){
-    var res = isSignedIn()
-    this.setState({signedIn: res, checkedSignedIn: true})
+    this.checkedSignedIn()
   }
 
+  checkedSignedIn(){
+    var res = isSignedIn()
+    console.log('res', res);
+    this.setState({signedIn: res, checkedSignedIn: true})
+  }
 
   render() {
 

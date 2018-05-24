@@ -12,7 +12,8 @@ import { SocialIcon } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 import RegisterForm from '../components/RegisterForm';
 import * as firebase from 'firebase';
-// import FBSDK, {LoginManager, AccessToken} from 'react-native-fbsdk';
+import 'firebase/firestore';
+import FBSDK, {LoginManager, AccessToken} from 'react-native-fbsdk';
 
 export default class Register extends Component {
 
@@ -21,6 +22,10 @@ export default class Register extends Component {
   }
 
   fbAuth = async () => {
+    firestore = firebase.firestore()
+    settings = {timestampsInSnapshots: true};
+    firestore.settings(settings)
+
     try {
       this.setState({loading:true});
       var result = await LoginManager.logInWithReadPermissions(['public_profile','email','user_friends']);
@@ -29,30 +34,33 @@ export default class Register extends Component {
         var token = tokenData.accessToken.toString();
         var credential = firebase.auth.FacebookAuthProvider.credential(token);
         var user = await firebase.auth().signInWithCredential(credential);
-        firebase.database().ref('users/'+user.uid+'/info').set({
-          name:user.displayName,
-          email:user.email,
-          avatar:user.photoURL
-        });
-        this.resetToHome()
+        console.log("user", user);
+        firestore.collection('users')
+        .doc(`${user.uid}`)
+        .set({
+          ['info']: {
+            name:user.displayName,
+            email:user.email,
+            photoURL:user.photoURL,
+            refreshToken:user.refreshToken,
+          }},
+          { merge: true }
+        )
+        .then(() => {
+          this.setState({loading:false});
+          this.switchNavigators()
+        })
+
       }
-      this.setState({loading:false});
+
     } catch (error) {
       this.setState({loading:false});
       alert(error)
     }
   }
 
-  resetToHome(){
-    return this.props
-               .navigation
-               .dispatch(NavigationActions.reset(
-                 {
-                    index: 0,
-                    actions: [
-                      NavigationActions.navigate({ routeName: 'Home'})
-                    ]
-                  }));
+  switchNavigators(){
+    this.props.navigation.navigate("SignedIn")
   }
 
   render() {
@@ -77,7 +85,7 @@ export default class Register extends Component {
           type='facebook'
           light
           button
-          // onPress={() => this.fbAuth()}
+          onPress={() => this.fbAuth()}
         />
 
       </View>

@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import { BGC, tintColor } from './colors';
 import Home from '../screens/Home';
-import PostContent from '../screens/PostContent';
+import Picker from '../screens/Picker';
 import Leaderboard from '../screens/Leaderboard';
 import Activity from '../screens/Activity';
 import Trending from '../screens/Trending';
@@ -16,7 +16,7 @@ import Logout from '../screens/Logout';
 
 export const PostStack = createStackNavigator({
   Picker: {
-    screen: PostContent,
+    screen: Picker,
   },
   // confirmscreen
 }, {
