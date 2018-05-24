@@ -13,6 +13,7 @@ import {List} from 'react-native-elements';
 
 import { BGC, tintColor } from '../index/colors';
 import {impData} from '../index/data';
+// import { NavigationActions } from 'react-navigation';
 import Header from './../components/Header';
 import Post from './../components/Post';
 
@@ -47,11 +48,11 @@ export default class Home extends Component<Props> {
     )
   }
 
-  renderHeader(){
-    return(
-      <Header/>
-    )
-  }
+  // renderHeader(){
+  //   return(
+  //     <Header navigation={this.props.navigation}/>
+  //   )
+  // }
 
   _renderItem = ({item}) => (
     <Post
@@ -64,16 +65,16 @@ export default class Home extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        
+        {/* <Header navigation={this.props.navigation}/> */}
         {/* <List> */}
-          <FlatList
-            data={this.state.data}
-            extraData={this.state}
-            renderItem={this._renderItem}
-            keyExtractor={item => item.name}
-            ItemSeparatorComponent={this.renderSeparator}
-            ListHeaderComponent={this.renderHeader}
-          />
+        <FlatList
+          data={this.state.data}
+          extraData={this.state}
+          renderItem={this._renderItem}
+          keyExtractor={item => item.name}
+          ItemSeparatorComponent={this.renderSeparator}
+          ListHeaderComponent= {<Header navigation={this.props.navigation}/>}
+        />
         {/* </List> */}
       </View>
     );

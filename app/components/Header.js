@@ -10,8 +10,14 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { BGC, tintColor } from '../index/colors';
 
 
-
 export default class Header extends Component<Props> {
+
+  createPost(){
+    this.props.navigation.navigate('Picker')
+  }
+
+
+
   render() {
     return (
       <View style={styles.container}>
@@ -22,7 +28,7 @@ export default class Header extends Component<Props> {
           <Text style={styles.title}>
             HOT AIR
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => this.createPost()}>
             <Icon name='photo-camera' size={30} color={`${BGC}`}/>
           </TouchableOpacity>
         {/* </View> */}

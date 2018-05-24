@@ -1,20 +1,36 @@
 import React from 'react';
 import {StyleSheet, Image, Platform} from 'react-native';
-import { createBottomTabNavigator, createMaterialTopTabNavigator, createStackNavigator, DrawerNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createMaterialTopTabNavigator, createStackNavigator, createDrawerNavigator, createSwitchNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { BGC, tintColor } from './colors';
 import Home from '../screens/Home';
+import PostContent from '../screens/PostContent';
 import Leaderboard from '../screens/Leaderboard';
 import Activity from '../screens/Activity';
 import Trending from '../screens/Trending';
 import Profile from '../screens/Profile';
+import Login from '../screens/Login';
+import Register from '../screens/Register';
+import Logout from '../screens/Logout';
 
+export const PostStack = createStackNavigator({
+  Picker: {
+    screen: PostContent,
+  },
+  // confirmscreen
+}, {
+  mode:'modal',
+  headerMode:'none',
+})
 
 
 export const HomeStack = createStackNavigator({
   Home: {
     screen: Home,
+  },
+  Picker: {
+    screen: PostStack
   },
 }, {
   mode:'modal',
@@ -22,7 +38,6 @@ export const HomeStack = createStackNavigator({
 })
 
 const tabType = Platform.OS == 'ios' ? createBottomTabNavigator : createMaterialTopTabNavigator
-
 export const TabNav = tabType({
   Home: {
     screen: HomeStack,
@@ -85,7 +100,7 @@ export const TabNav = tabType({
     }
   },
 }, {
-  mode: 'modal',
+  // mode: 'modal',
   headerMode: 'none',
   animationEnabled: true,
   swipeEnabled: true,
@@ -97,15 +112,30 @@ export const TabNav = tabType({
   }
 })
 
-
-export const Root = createStackNavigator({
-  Home: {
-    screen: TabNav,
+export const LoginRegisterStack = createDrawerNavigator({
+  Login: {
+    screen: Login,
   },
-  // Order: {
-  //   screen: OrderStack,
-  // },
+  Register: {
+    screen: Register,
+  },
 }, {
-  mode: 'modal',
   headerMode: 'none',
+  mode:'modal',
 });
+
+
+export const Root = (signedIn = false) => {
+
+  return createSwitchNavigator({
+    SignedIn: {
+      screen: TabNav,
+    },
+    SignedOut: {
+      screen: LoginRegisterStack
+    }
+
+  }, {
+    initialRouteName: signedIn ? "SignedIn" : "SignedOut"
+  });
+}
