@@ -54,11 +54,21 @@ export default class Home extends Component<Props> {
   //   )
   // }
 
+  getImageDims(image){
+    console.log('IMAGE SIZE',Image.getSize(image, (width, height)));
+    return Image.getSize(image, (width, height))
+  }
+
   _renderItem = ({item}) => (
+    // res = this.getImageDims(item.image)
+    // var width = res.width
+    // var height = res.height
     <Post
       name={item.name}
       time={item.time}
       image={item.image}
+      // ratio={0.5} // To customize aspect ratio of picture
+
     />
   );
 
@@ -73,7 +83,12 @@ export default class Home extends Component<Props> {
           renderItem={this._renderItem}
           keyExtractor={item => item.name}
           ItemSeparatorComponent={this.renderSeparator}
-          ListHeaderComponent= {<Header navigation={this.props.navigation}/>}
+          ListHeaderComponent= {<Header
+            title='VOOM'
+            navigation={this.props.navigation}
+            // leftIcon='group'
+            // rightIcon='photo-camera'
+          />}
         />
         {/* </List> */}
       </View>

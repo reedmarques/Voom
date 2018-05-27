@@ -7,6 +7,8 @@ import { BGC, tintColor } from './colors';
 import Home from '../screens/Home';
 import Picker from '../screens/Picker';
 import Leaderboard from '../screens/Leaderboard';
+import Competition from '../screens/Competition';
+import CompetitionDetails from '../screens/CompetitionDetails';
 import Activity from '../screens/Activity';
 import Trending from '../screens/Trending';
 import Profile from '../screens/Profile';
@@ -14,13 +16,19 @@ import Login from '../screens/Login';
 import Register from '../screens/Register';
 import Logout from '../screens/Logout';
 
-export const PostStack = createStackNavigator({
+export const CompetitionStack = createStackNavigator({
+  Competition: {
+    screen: Competition,
+  },
+  CompetitionDetails: {
+    screen: CompetitionDetails,
+  },
   Picker: {
     screen: Picker,
   },
   // confirmscreen
 }, {
-  mode:'modal',
+  // mode:'modal',
   headerMode:'none',
 })
 
@@ -28,10 +36,7 @@ export const PostStack = createStackNavigator({
 export const HomeStack = createStackNavigator({
   Home: {
     screen: Home,
-  },
-  Picker: {
-    screen: PostStack
-  },
+  }
 }, {
   mode:'modal',
   headerMode:'none',
@@ -61,8 +66,8 @@ export const TabNav = tabType({
       )
     }
   },
-  Leaderboard: {
-    screen: Leaderboard,
+  Competition: {
+    screen: CompetitionStack,
     navigationOptions: {
       tabBarLabel: null,
       tabBarIcon: ({focused}) => (
